@@ -176,6 +176,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
 
+        //追記
+        App\Providers\HelloServiceProvider::class,
+
     ],
 
     /*
