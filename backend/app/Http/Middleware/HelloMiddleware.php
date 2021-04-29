@@ -23,9 +23,8 @@ class HelloMiddleware
         ];
 
         $request->merge(['data'=> $data]);
-        
+
         $response =  $next($request);
         return $response;
-
     }
 }
