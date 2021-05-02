@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\Myrule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class HelloResuest extends FormRequest
 {
@@ -14,11 +14,9 @@ class HelloResuest extends FormRequest
      */
     public function authorize()
     {
-        if ($this->path() == 'hello')
-        {
+        if ($this->path() == 'hello') {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

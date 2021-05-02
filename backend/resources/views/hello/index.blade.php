@@ -1,8 +1,7 @@
 <body>
-<p>{{ $msg }}</p>
+    <p>{{ $msg }}</p>
     <form action="/hello" method="post">
         <table>
-            @csrf
             @error('name')
                 <tr>
                     <th>ERROR</th>
@@ -36,7 +35,7 @@
             <tr>
                 <th>age: </th>
                 <td>
-                    <input type="text" name="age"  value="{{ old('age') }}">
+                    <input type="text" name="age" value="{{ old('age') }}">
                 </td>
             </tr>
             <tr>
