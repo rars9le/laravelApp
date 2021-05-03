@@ -30,10 +30,10 @@ class HelloController extends Controller
     public function create(Request $request)
     {
         $param = [
-            'name'       => $request->name,
-            'email'      => $request->mail,
-            'age'        => $request->age,
-            'password'   => $request->password,
+            'name'     => $request->name,
+            'email'    => $request->mail,
+            'age'      => $request->age,
+            'password' => $request->password,
         ];
 
         DB::insert('insert into users (name, age, email, password) values (:name, :age, :email, :password)', $param);
@@ -51,15 +51,14 @@ class HelloController extends Controller
     {
         $param = [
             'id'       => $request->id,
-            'name'       => $request->name,
-            'email'      => $request->mail,
-            'age'        => $request->age,
-            'password'        => $request->password,
+            'name'     => $request->name,
+            'email'    => $request->mail,
+            'age'      => $request->age,
+            'password' => $request->password,
         ];
         DB::update('update users set name = :name, email = :email, age = :age, password = :password where id = :id', $param);
         return redirect('/hello');
     }
-
 
     public function delete(Request $request)
     {
@@ -70,9 +69,7 @@ class HelloController extends Controller
 
     public function remove(Request $request)
     {
-        $param = [
-            'id'       => $request->id,
-        ];
+        $param = ['id' => $request->id,];
         DB::update('delete from users where id = :id', $param);
         return redirect('/hello');
     }
