@@ -1,49 +1,24 @@
-<body>
-    <p>{{ $msg }}</p>
-    <form action="/hello" method="post">
-        <table>
-            @error('name')
-                <tr>
-                    <th>ERROR</th>
-                    <td>{{ $message }}</td>
-                </tr>
-            @enderror
+@extends('layouts.helloapp')
+
+@section('title', 'index')
+
+@section('menubar')
+    @parent
+    インデックスページ
+@endsection
+
+@section('content')
+    <table>
+        @foreach ($items as $item)
             <tr>
-                <th>name: </th>
-                <td>
-                    <input type="text" name="name" value="{{ old('name') }}">
-                </td>
+                <td>{{ $item->name }}</td>
+                <td>{{ $item->email }}</td>
+                <td>{{ $item->age }}</td>
             </tr>
-            @error('mail')
-                <tr>
-                    <th>ERROR</th>
-                    <td>{{ $message }}</td>
-                </tr>
-            @enderror
-            <tr>
-                <th>mail: </th>
-                <td>
-                    <input type="text" name="mail" value="{{ old('mail') }}">
-                </td>
-            </tr>
-            @error('age')
-                <tr>
-                    <th>ERROR</th>
-                    <td>{{ $message }}</td>
-                </tr>
-            @enderror
-            <tr>
-                <th>age: </th>
-                <td>
-                    <input type="text" name="age" value="{{ old('age') }}">
-                </td>
-            </tr>
-            <tr>
-                <th></th>
-                <td>
-                    <input type="submit" value="send">
-                </td>
-            </tr>
-        </table>
-    </form>
-</body>
+        @endforeach
+    </table>
+@endsection
+
+@section('footer')
+    copyright 2021
+@endsection
