@@ -31,12 +31,6 @@
                 </td>
             </tr>
             <tr>
-                <th>password: </th>
-                <td>
-                    <input type="text" name="password" {{ $form->password }}>
-                </td>
-            </tr>
-            <tr>
                 <th></th>
                 <td>
                     <input type="submit" value="send">

@@ -12,7 +12,7 @@ class HelloController extends Controller
 {
     public function index(Request $request)
     {
-        $items = DB::select('select * from users');
+        $items = DB::table('people')->get();
         return view('hello.index', ['items' => $items,]);
     }
 
@@ -20,6 +20,17 @@ class HelloController extends Controller
     {
         $items = DB::select('select * from users');
         return view('hello.index', ['items' => $items,]);
+    }
+
+    public function show(Request $request)
+    {
+        $name = $request->name;
+        $items = DB::table('people')
+            ->where('name', 'like', '%' . $name . '%')
+            ->orWhere('email', 'like', '%' . $name . '%')
+            ->get();
+
+        return view('hello.show', ['items' => $items]);
     }
 
     public function add(Request $request)
@@ -33,18 +44,19 @@ class HelloController extends Controller
             'name'     => $request->name,
             'email'    => $request->mail,
             'age'      => $request->age,
-            'password' => $request->password,
         ];
 
-        DB::insert('insert into users (name, age, email, password) values (:name, :age, :email, :password)', $param);
+        DB::table('people')->insert($param);
         return redirect('/hello');
     }
 
     public function edit(Request $request)
     {
-        $param = ['id' => $request->id];
-        $item = DB::select('select * from users where id = :id', $param);
-        return view('hello.edit', ['form' => $item[0]]);
+        $item = DB::table('people')
+            ->where('id', $request->id)
+            ->first();
+
+        return view('hello.edit', ['form' => $item]);
     }
 
     public function update(Request $request)
@@ -54,23 +66,28 @@ class HelloController extends Controller
             'name'     => $request->name,
             'email'    => $request->mail,
             'age'      => $request->age,
-            'password' => $request->password,
         ];
-        DB::update('update users set name = :name, email = :email, age = :age, password = :password where id = :id', $param);
+        DB::table('people')
+            ->where('id', $request->id)
+            ->update($param);
         return redirect('/hello');
     }
 
     public function delete(Request $request)
     {
         $param = ['id' => $request->id];
-        $item = DB::select('select * from users where id = :id', $param);
-        return view('hello.delete', ['form' => $item[0]]);
+        $item = DB::table('people')
+        ->where('id', $request->id)
+        ->first();
+        return view('hello.delete', ['form' => $item]);
     }
 
     public function remove(Request $request)
     {
         $param = ['id' => $request->id,];
-        DB::update('delete from users where id = :id', $param);
+        DB::table('people')
+            ->where('id', $request->id)
+            ->delete();
         return redirect('/hello');
     }
 }
