@@ -10,15 +10,23 @@
 @section('content')
     <table>
         <tr>
-            <th>name</th>
-            <th>mail</th>
-            <th>Age</th>
+            <th>Person</th>
+            <th>Board</th>
         </tr>
         @foreach ($items as $item)
             <tr>
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->mail }}</td>
-                <td>{{ $item->age }}</td>
+                <td>{{ $item->getData() }}</td>
+                <td>
+                    @if ($item->boards != null)
+                        <table width="100%">
+                            @foreach ($item->boards as $board)
+                                <tr>
+                                    <td>{{ $board->getData() }}</td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    @endif
+                </td>
             </tr>
         @endforeach
     </table>
