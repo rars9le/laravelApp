@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\HelloController;
-use App\Http\Middleware\HelloMiddleware;
+use App\Http\Controllers\PersonController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,3 +35,8 @@ Route::get('/hello/delete', [HelloController::class, 'delete']);
 Route::post('/hello/delete', [HelloController::class, 'remove']);
 
 Route::get('hello/other', 'HelloController@other');
+
+Route::get('person', [PersonController::class, 'index']);
+
+Route::get('person/find', [PersonController::class, 'find']);
+Route::post('person/find', [PersonController::class, 'search']);
