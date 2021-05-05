@@ -35,7 +35,7 @@
             <tr>
                 <th>age: </th>
                 <td>
-                    <input type="nuber" name="age" value="{{ old('age') }}">
+                    <input type="number" name="age" value="{{ old('age') }}">
                 </td>
             </tr>
             <tr>
