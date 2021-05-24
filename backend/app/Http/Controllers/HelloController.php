@@ -6,19 +6,21 @@ use App\Http\Requests\HelloResuest;
 
 use App\Models\Person;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class HelloController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
         $sort = $request->sort;
-        $items = Person::orderBy($sort, 'asc')->paginate(5);
+        $items = Person::orderBy($sort, 'asc')->simplePaginate(5);
         $param = [
             'items' => $items,
             'sort'  => $sort,
+            'user'  => $user,
         ];
         return view('hello.index', $param);
     }
@@ -84,8 +86,8 @@ class HelloController extends Controller
     {
         $param = ['id' => $request->id];
         $item = DB::table('people')
-        ->where('id', $request->id)
-        ->first();
+            ->where('id', $request->id)
+            ->first();
         return view('hello.delete', ['form' => $item]);
     }
 
@@ -106,13 +108,30 @@ class HelloController extends Controller
     public function ses_get(Request $request)
     {
         $sesdata = $request->session()->get('msg');
-        return view('hello.session',['session_data' => $sesdata]);
+        return view('hello.session', ['session_data' => $sesdata]);
     }
 
     public function ses_put(Request $request)
     {
         $msg = $request->input;
-        $request->session()->put('msg',$msg);
+        $request->session()->put('msg', $msg);
         return redirect('hello/session');
+    }
+    public function getAuth(Request $request)
+    {
+        $param = ['message' => 'ログインして下さい。'];
+        return view('hello.auth', $param);
+    }
+
+    public function postAuth(Request $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
+        if (Auth::attempt(['email' => $email,'password' => $password])) {
+            $msg = 'ログインしました。（' . Auth::user()->name . '）';
+        } else {
+            $msg = 'ログインに失敗しました。';
+        }
+        return view('hello.auth', ['message' => $msg]);
     }
 }

@@ -22,8 +22,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', [HelloController::class, 'index']);
+Route::get('/hello', [HelloController::class, 'index'])
+->middleware('auth');
 Route::post('/hello', [HelloController::class, 'post']);
+
+Route::get('/hello/auth', [HelloController::class, 'getAuth']);
+Route::post('/hello/auth', [HelloController::class, 'postAuth']);
 
 Route::get('/hello/show', [HelloController::class, 'show']);
 
